@@ -3,6 +3,7 @@ Configuration settings for the application.
 """
 from pydantic_settings import BaseSettings
 from typing import List
+from pydantic import field_validator
 
 
 class Settings(BaseSettings):
@@ -10,6 +11,15 @@ class Settings(BaseSettings):
 
     # Database
     DATABASE_URL: str
+
+    @field_validator("DATABASE_URL", mode="before")
+    @classmethod
+    def fix_postgres_schema(cls, v: str) -> str:
+        """Ensure DATABASE_URL uses the asyncpg driver and fix common cloud prefixes."""
+        if v and (v.startswith("postgres://") or v.startswith("postgresql://")):
+            if "+asyncpg" not in v:
+                return v.replace("://", "+asyncpg://", 1)
+        return v
 
     # JWT Security
     SECRET_KEY: str
