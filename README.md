@@ -189,10 +189,10 @@ uvicorn app.main:app --reload --log-level info
 python -m uvicorn app.main:app --reload --log-level info
 
 # Production mode
-uvicorn app.main:app --host 0.0.0.0 --port 8000
+uvicorn app.main:app --host 0.0.0.0 --port 10000
 ```
 
-The API will be available at `http://localhost:8000`
+The API will be available at `http://localhost:10000`
 
 ## 🚀 Quick Start
 
@@ -232,17 +232,17 @@ uvicorn app.main:app --reload --log-level info
 
 Once the server is running, visit:
 
-- **🔍 Swagger UI** (Interactive): http://localhost:8000/docs
+- **🔍 Swagger UI** (Interactive): http://localhost:10000/docs
   - Test endpoints directly in browser
   - Automatic request/response documentation
   - Cookie-based authentication
 
-- **📖 ReDoc** (Clean view): http://localhost:8000/redoc
+- **📖 ReDoc** (Clean view): http://localhost:10000/redoc
   - Professional API documentation
   - Sidebar navigation
   - Search functionality
 
-- **❤️ Health Check**: http://localhost:8000/health
+- **❤️ Health Check**: http://localhost:10000/health
   - Verify server status
 
 ### Swagger UI Features
@@ -264,7 +264,7 @@ For complete Swagger UI documentation, see: [`SWAGGER_GUIDE.md`](SWAGGER_GUIDE.m
 Register a new user with email, password, and role.
 
 ```bash
-curl -X POST http://localhost:8000/api/v1/auth/register \
+curl -X POST http://localhost:10000/api/v1/auth/register \
   -H "Content-Type: application/json" \
   -d '{
     "email": "shipper@example.com",
@@ -296,7 +296,7 @@ curl -X POST http://localhost:8000/api/v1/auth/register \
 Authenticate user and receive tokens.
 
 ```bash
-curl -X POST http://localhost:8000/api/v1/auth/login \
+curl -X POST http://localhost:10000/api/v1/auth/login \
   -H "Content-Type: application/json" \
   -d '{
     "email": "shipper@example.com",
@@ -327,7 +327,7 @@ curl -X POST http://localhost:8000/api/v1/auth/login \
 Get information about the currently authenticated user.
 
 ```bash
-curl -X GET http://localhost:8000/api/v1/auth/me \
+curl -X GET http://localhost:10000/api/v1/auth/me \
   -H "Cookie: access_token=your_jwt_token"
 ```
 
@@ -348,7 +348,7 @@ curl -X GET http://localhost:8000/api/v1/auth/me \
 Refresh the access token using the refresh token.
 
 ```bash
-curl -X POST http://localhost:8000/api/v1/auth/refresh \
+curl -X POST http://localhost:10000/api/v1/auth/refresh \
   -H "Cookie: refresh_token=your_refresh_token"
 ```
 
@@ -364,7 +364,7 @@ curl -X POST http://localhost:8000/api/v1/auth/refresh \
 Log out and clear authentication cookies.
 
 ```bash
-curl -X POST http://localhost:8000/api/v1/auth/logout \
+curl -X POST http://localhost:10000/api/v1/auth/logout \
   -H "Cookie: access_token=your_jwt_token"
 ```
 
@@ -524,7 +524,7 @@ alembic upgrade head --verbose
 
 ```bash
 # Update CORS_ORIGINS in .env
-CORS_ORIGINS=["http://localhost:3000","http://localhost:8000"]
+CORS_ORIGINS=["http://localhost:3000","http://localhost:10000"]
 # Restart server after changes
 ```
 
@@ -568,7 +568,7 @@ Security mechanism to prevent brute force attacks:
 - [ ] Set proper `CORS_ORIGINS` for your frontend domain
 - [ ] Run database migrations: `alembic upgrade head`
 - [ ] Set up SSL/TLS certificates
-- [ ] Configure firewall to allow only port 8000
+- [ ] Configure firewall to allow only port 10000
 - [ ] Set up log monitoring
 - [ ] Configure database backups
 - [ ] Set up monitoring and alerting
