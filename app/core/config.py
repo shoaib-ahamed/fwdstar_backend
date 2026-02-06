@@ -2,8 +2,9 @@
 Configuration settings for the application.
 """
 from pydantic_settings import BaseSettings
-from typing import List
+from typing import List, Union
 from pydantic import field_validator
+import json
 
 
 class Settings(BaseSettings):
@@ -31,6 +32,23 @@ class Settings(BaseSettings):
     ENVIRONMENT: str = "development"
     CORS_ORIGINS: List[str] = ["http://localhost:3000"]
 
+    @field_validator("CORS_ORIGINS", mode="before")
+    @classmethod
+    def parse_cors_origins(cls, v: Union[str, List[str]]) -> List[str]:
+        """Parse CORS_ORIGINS from JSON string or comma-separated values."""
+        if isinstance(v, list):
+            return v
+        if isinstance(v, str):
+            # Try JSON parsing first
+            if v.startswith("["):
+                try:
+                    return json.loads(v)
+                except json.JSONDecodeError:
+                    pass
+            # Fall back to comma-separated
+            return [origin.strip() for origin in v.split(",") if origin.strip()]
+        return ["http://localhost:3000"]
+
     class Config:
         """Pydantic configuration."""
         env_file = ".env"
@@ -39,3 +57,4 @@ class Settings(BaseSettings):
 
 # Global settings instance
 settings = Settings()
+
